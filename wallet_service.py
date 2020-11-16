@@ -61,6 +61,9 @@ if __name__ == "__main__":
     logging.basicConfig()
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     service_pb2_grpc.add_WalletServiceServicer_to_server(WalletService(), server)
-    server.add_insecure_port(os.getenv("GRPC_BIND_URI", "[::]:50051"))
+
+    bind_uri = os.getenv("GRPC_BIND_URI", "[::]:50051")
+    server.add_insecure_port(bind_uri)
     server.start()
+    print("Server started on %s" % bind_uri)
     server.wait_for_termination()
