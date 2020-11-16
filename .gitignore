@@ -1,0 +1,11 @@
+# compiled output
+__pycache__
+/proto
+
+# venv-specific config
+/bin
+/lib
+/pyvenv.cfg
+
+# editor-specific config
+/.vscode
