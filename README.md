@@ -1,6 +1,6 @@
 # `naas-wallet-service`
 
-`naas-wallet-service` is a wallet generation service for NaaS. It needs more documentation.
+`naas-wallet-service` is a wallet generation service for NaaS.
 
 ## Running `naas-wallet-service`
 

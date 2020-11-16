@@ -3,6 +3,7 @@
 import os
 import sys
 
+# add proto/ to include path to fix import error
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "proto")))
 
 from concurrent import futures
@@ -14,10 +15,21 @@ import grpc
 
 
 class WalletService(service_pb2_grpc.WalletServiceServicer):
+    """
+    RPC handler for the wallet service.
+
+    Currently has one handler, which generates an ETH2.0 wallet.
+    """
+
     def MakeWallet(self, request, context):
+        """
+        Make an ETH2.0 wallet.
+        """
         response = service_pb2.MakeWalletResponse()
 
         gen = WalletGenerator(request.password, self._GetNetwork(request.network))
+
+        # Generate the appropriate number of validator keys.
         for _ in range(0, request.numKeysToGenerate):
             cred_proto = response.credentials.add()
             cred = gen.generate_credential()
@@ -33,6 +45,10 @@ class WalletService(service_pb2_grpc.WalletServiceServicer):
 
     @staticmethod
     def _GetNetwork(network_enum):
+        """
+        Convert an ETH network (mainnet, testnet) from the protobuf enum to the
+        enum used by the `eth2deposit` library.
+        """
         if network_enum == service_pb2.MakeWalletRequest.EthNetwork.MAINNET:
             return settings.MAINNET
         elif network_enum == service_pb2.MakeWalletRequest.EthNetwork.TESTNET_MEDALLA:
