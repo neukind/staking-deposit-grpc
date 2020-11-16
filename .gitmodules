@@ -1,0 +1,4 @@
+[submodule "include/naas-proto"]
+	path = include/naas-proto
+	url = git@github.com:neukind/naas-proto.git
+	branch = wallet
