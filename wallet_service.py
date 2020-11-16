@@ -17,7 +17,7 @@ class WalletService(service_pb2_grpc.WalletServiceServicer):
     def MakeWallet(self, request, context):
         response = service_pb2.MakeWalletResponse()
 
-        gen = WalletGenerator(request.password, settings.MAINNET)
+        gen = WalletGenerator(request.password, self._GetNetwork(request.network))
         for _ in range(0, request.numKeysToGenerate):
             cred_proto = response.credentials.add()
             cred = gen.generate_credential()
@@ -31,11 +31,20 @@ class WalletService(service_pb2_grpc.WalletServiceServicer):
         response.mnemonic = gen.mnemonic
         return response
 
+    @staticmethod
+    def _GetNetwork(network_enum):
+        if network_enum == service_pb2.MakeWalletRequest.EthNetwork.MAINNET:
+            return settings.MAINNET
+        elif network_enum == service_pb2.MakeWalletRequest.EthNetwork.TESTNET_MEDALLA:
+            return settings.MEDALLA
+        else:
+            return ""
+
 
 if __name__ == "__main__":
     logging.basicConfig()
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     service_pb2_grpc.add_WalletServiceServicer_to_server(WalletService(), server)
-    server.add_insecure_port("[::]:50051")
+    server.add_insecure_port(os.getenv("GRPC_BIND_URI", "[::]:50051"))
     server.start()
     server.wait_for_termination()
