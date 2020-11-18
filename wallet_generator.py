@@ -27,7 +27,7 @@ class WalletGenerator:
             words_path="word_lists",
         )
         self.password = password
-        self.setting = settings.get_setting(network)
+        self.setting = settings.get_chain_setting(network)
 
     def generate_credential(self):
         """
