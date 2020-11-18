@@ -39,7 +39,7 @@ class WalletGenerator:
             mnemonic_password="",
             index=self.idx,
             amount=32 * constants.ETH2GWEI,
-            fork_version=self.setting.GENESIS_FORK_VERSION,
+            chain_setting=self.setting,
         )
 
         # Increment the index so we generate a new key next time.
