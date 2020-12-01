@@ -8,6 +8,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "proto")
 
 from concurrent import futures
 from eth2deposit import settings
+from eth2deposit.utils import constants
 from proto.wallet import service_pb2, service_pb2_grpc
 from wallet_generator import WalletGenerator
 import logging
@@ -26,8 +27,11 @@ class WalletService(service_pb2_grpc.WalletServiceServicer):
         Make an ETH2.0 wallet.
         """
         response = service_pb2.MakeWalletResponse()
+        amount = 32 * constants.ETH2GWEI
+        if request.amount != 0:
+            amount = request.amount
 
-        gen = WalletGenerator(request.password, self._GetNetwork(request.network))
+        gen = WalletGenerator(request.password, self._GetNetwork(request.network), amount)
 
         # Generate the appropriate number of validator keys.
         for _ in range(0, request.numKeysToGenerate):

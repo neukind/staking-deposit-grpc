@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from eth2deposit import credentials, settings
-from eth2deposit.utils import constants
 from eth2deposit.key_handling import keystore
 from eth2deposit.key_handling.key_derivation import mnemonic
 import json
@@ -20,14 +19,16 @@ class WalletGenerator:
     password = ""
     idx = 0
     setting = {}
+    amount = 0
 
-    def __init__(self, password, network):
+    def __init__(self, password, network, amount):
         self.mnemonic = mnemonic.get_mnemonic(
             language="english",
             words_path="word_lists",
         )
         self.password = password
         self.setting = settings.get_chain_setting(network)
+        self.amount = amount
 
     def generate_credential(self):
         """
@@ -38,7 +39,7 @@ class WalletGenerator:
             mnemonic=self.mnemonic,
             mnemonic_password="",
             index=self.idx,
-            amount=32 * constants.ETH2GWEI,
+            amount=self.amount,
             chain_setting=self.setting,
         )
 
