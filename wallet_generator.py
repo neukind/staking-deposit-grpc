@@ -26,6 +26,7 @@ class WalletGenerator:
             language="english",
             words_path="word_lists",
         )
+        print(self.mnemonic)
         self.password = password
         self.setting = settings.get_chain_setting(network)
         self.amount = amount
@@ -41,6 +42,7 @@ class WalletGenerator:
             index=self.idx,
             amount=self.amount,
             chain_setting=self.setting,
+            hex_eth1_withdrawal_address=None
         )
 
         # Increment the index so we generate a new key next time.
