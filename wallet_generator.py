@@ -26,7 +26,6 @@ class WalletGenerator:
             language="english",
             words_path="word_lists",
         )
-        print(self.mnemonic)
         self.password = password
         self.setting = settings.get_chain_setting(network)
         self.amount = amount
