@@ -9,3 +9,6 @@ __pycache__
 
 # editor-specific config
 /.vscode
+
+# src is dynamically generated when building
+/src
