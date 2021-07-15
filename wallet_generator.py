@@ -41,6 +41,7 @@ class WalletGenerator:
             index=self.idx,
             amount=self.amount,
             chain_setting=self.setting,
+            hex_eth1_withdrawal_address=None
         )
 
         # Increment the index so we generate a new key next time.

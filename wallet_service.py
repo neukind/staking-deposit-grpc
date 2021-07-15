@@ -56,7 +56,7 @@ class WalletService(service_pb2_grpc.WalletServiceServicer):
         if network_enum == service_pb2.MakeWalletRequest.EthNetwork.MAINNET:
             return settings.MAINNET
         elif network_enum == service_pb2.MakeWalletRequest.EthNetwork.TESTNET_MEDALLA:
-            return settings.MEDALLA
+            return settings.PYRMONT
         else:
             return ""
 
