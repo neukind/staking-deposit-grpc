@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from eth2deposit import credentials, settings
-from eth2deposit.key_handling import keystore
-from eth2deposit.key_handling.key_derivation import mnemonic
+from staking_deposit import credentials, settings
+from staking_deposit.key_handling import keystore
+from staking_deposit.key_handling.key_derivation import mnemonic
 import json
 
 
