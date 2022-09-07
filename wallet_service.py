@@ -7,8 +7,8 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "proto")))
 
 from concurrent import futures
-from eth2deposit import settings
-from eth2deposit.utils import constants
+from staking_deposit import settings
+from staking_deposit.utils import constants
 from proto.wallet import service_pb2, service_pb2_grpc
 from wallet_generator import WalletGenerator
 import logging
@@ -51,12 +51,12 @@ class WalletService(service_pb2_grpc.WalletServiceServicer):
     def _GetNetwork(network_enum):
         """
         Convert an ETH network (mainnet, testnet) from the protobuf enum to the
-        enum used by the `eth2deposit` library.
+        enum used by the `staking_deposit` library.
         """
         if network_enum == service_pb2.MakeWalletRequest.EthNetwork.MAINNET:
             return settings.MAINNET
         elif network_enum == service_pb2.MakeWalletRequest.EthNetwork.TESTNET_MEDALLA:
-            return settings.PYRMONT
+            return settings.GOERLI
         else:
             return ""
 
