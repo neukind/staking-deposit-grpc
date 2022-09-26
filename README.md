@@ -1,16 +1,16 @@
-# `naas-wallet-service`
+# `staking-deposit-grpc`
 
-`naas-wallet-service` is a wallet generation service for NaaS.
+`staking-deposit-grpc` is a wallet generation service for NaaS.
 
-## Running `naas-wallet-service`
+## Running `staking-deposit-grpc`
 
 ```bash
 # clone the repository from Github
-git clone git@github.com:neukind/naas-wallet-service.git
+git clone git@github.com:neukind/staking-deposit-grpc.git
 
 # create a Python virtual environment (venv)
-python3 -m venv naas-wallet-service
-cd naas-wallet-service
+python3 -m venv staking-deposit-grpc
+cd staking-deposit-grpc
 
 # initialize the Git submodules (for shared protobuf definitions)
 git submodule update --init
