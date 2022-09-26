@@ -7,6 +7,7 @@
 [![Apache License 2.0](https://img.shields.io/github/license/neukind/staking-deposit-grpc)](https://github.com/peterblockman/staking-deposit-grpc/blob/main/LICENSE)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 
+**Disclaimer: staking-deposit-grpc is still in beta. Use it at your own risk**
 ## Running staking-deposit-grpc
 
 ```bash
