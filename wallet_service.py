@@ -9,7 +9,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "proto")
 from concurrent import futures
 from staking_deposit import settings
 from staking_deposit.utils import constants
-from proto.wallet import service_pb2, service_pb2_grpc
+from proto import service_pb2, service_pb2_grpc
 from wallet_generator import WalletGenerator
 import logging
 import grpc
