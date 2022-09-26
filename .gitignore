@@ -12,3 +12,6 @@ __pycache__
 
 # src is dynamically generated when building
 /src
+
+#MacOs
+.DS_store

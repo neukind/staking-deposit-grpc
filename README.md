@@ -31,6 +31,16 @@ pip install -r requirements.txt
 
 # run the wallet service
 
-./wallet_service.py
 
+./staking_deposit_service.py
 ```
+
+## Usage 
+
+see [service.proto](https://github.com/neukind/staking-deposit-grpc/blob/main/include/proto/service.proto)
+
+## Tasks
+
+ - :white_check_mark: Implement`new-mnemonic` 
+ - :white_large_square: Implement `existing-mnemonic`  
+ - :white_large_square: Increase test coverage

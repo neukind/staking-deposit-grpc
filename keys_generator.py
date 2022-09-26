@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-
+import os
 from staking_deposit import credentials, settings
 from staking_deposit.key_handling import keystore
-from staking_deposit.key_handling.key_derivation import mnemonic
+from staking_deposit.key_handling.key_derivation import mnemonic as Mnemonic
 import json
 
 
-class WalletGenerator:
+class KeysGenerator:
     """
     Class that generates an ETH2.0 wallet and validator keys.
 
@@ -16,19 +16,39 @@ class WalletGenerator:
     """
 
     mnemonic = ""
-    password = ""
+    keystore_password = ""
+    mnemonic_language = ""
+    mnemonic = ""
+    eth1_withdrawal_address = None
     idx = 0
     setting = {}
     amount = 0
 
-    def __init__(self, password, network, amount):
-        self.mnemonic = mnemonic.get_mnemonic(
-            language="english",
-            words_path="word_lists",
+    def __init__(
+        self,
+        keystore_password,
+        chain,
+        amount,
+        mnemonic_language="english",
+        eth1_withdrawal_address=None,
+    ):
+        WORD_LISTS_PATH = os.path.join(
+            os.getcwd(),
+            "src",
+            "staking-deposit",
+            "staking_deposit",
+            "key_handling",
+            "key_derivation",
+            "word_lists",
         )
-        self.password = password
-        self.setting = settings.get_chain_setting(network)
+        self.mnemonic = Mnemonic.get_mnemonic(
+            language=mnemonic_language,
+            words_path=WORD_LISTS_PATH,
+        )
+        self.keystore_password = keystore_password
+        self.setting = settings.get_chain_setting(chain)
         self.amount = amount
+        self.eth1_withdrawal_address = eth1_withdrawal_address
 
     def generate_credential(self):
         """
@@ -41,7 +61,7 @@ class WalletGenerator:
             index=self.idx,
             amount=self.amount,
             chain_setting=self.setting,
-            hex_eth1_withdrawal_address=None
+            hex_eth1_withdrawal_address=self.eth1_withdrawal_address,
         )
 
         # Increment the index so we generate a new key next time.
@@ -51,7 +71,7 @@ class WalletGenerator:
         deposit_data = json.dumps(cred.deposit_datum_dict, default=lambda x: x.hex())
 
         # Export the validator keystore.
-        signing_keystore = cred.signing_keystore(self.password).as_json()
+        signing_keystore = cred.signing_keystore(self.keystore_password).as_json()
         ks_data = json.loads(signing_keystore)
         ks_crypto = keystore.KeystoreCrypto.from_json(ks_data["crypto"])
         ks = keystore.Keystore(
@@ -64,7 +84,7 @@ class WalletGenerator:
         )
 
         # Verify that the keystore decrypts correctly.
-        ks_secret = ks.decrypt(self.password)
+        ks_secret = ks.decrypt(self.keystore_password)
         if cred.signing_sk != int.from_bytes(ks_secret, "big"):
             return {}
 

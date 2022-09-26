@@ -2,23 +2,40 @@ syntax = "proto3";
 
 package wallet;
 
-service WalletService {
-  rpc MakeWallet(MakeWalletRequest) returns(MakeWalletResponse);
+service StakingDepositService {
+  rpc NewMnemonic(NewMnemonicRequest) returns(NewMnemonicResponse);
 }
 
-message MakeWalletRequest {
-  enum EthNetwork {
-    MAINNET = 0;
-    TESTNET_MEDALLA = 1;
-  }
+enum Chain {
+  MAINNET = 0;
+  ROPSTEN = 1;
+  GOERLI = 2;
+  PRATER = 3;
+  KILN = 4;
+  SEPOLIA = 5;
+}
 
-  string password = 1;
-  uint32 numKeysToGenerate = 2;
-  EthNetwork network = 3;
+enum MnemonicLanguage {
+  ENGLISH = 0;
+  CHINESE_SIMPLIFIED = 1;
+  CHINESE_TRADITIONAL = 2;
+  CZECH = 3;
+  ITALIAN = 4;
+  KOREAN = 5;
+  PORTUGUESE = 6;
+  SPANISH = 7;
+}
+
+message NewMnemonicRequest {
+  string keystore_password = 1;
+  uint32 num_validators = 2;
+  Chain chain = 3;
   uint64 amount = 4;
+  MnemonicLanguage mnemonic_language = 5;
+  string eth1_withdrawal_address = 6;
 }
 
-message MakeWalletResponse {
+message NewMnemonicResponse {
   message Credential {
     string deposit_data = 1;
     string signing_keystore = 2;
