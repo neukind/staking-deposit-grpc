@@ -8,6 +8,7 @@
 ## Running `staking-deposit-grpc`
 
 ```bash
+
 # clone the repository from Github
 
 git clone git@github.com:neukind/staking-deposit-grpc.git
@@ -29,6 +30,7 @@ pip install -r requirements.txt
 ./build_proto_libs.sh
 
 # run the wallet service
+
 
 ./staking_deposit_service.py
 ```
