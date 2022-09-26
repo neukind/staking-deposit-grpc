@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import os
 from staking_deposit import credentials, settings
 from staking_deposit.key_handling import keystore
 from staking_deposit.key_handling.key_derivation import mnemonic
@@ -22,9 +22,10 @@ class WalletGenerator:
     amount = 0
 
     def __init__(self, password, network, amount):
+        WORD_LISTS_PATH = os.path.join(os.getcwd(), 'src', 'staking-deposit','staking_deposit', 'key_handling', 'key_derivation', 'word_lists')
         self.mnemonic = mnemonic.get_mnemonic(
             language="english",
-            words_path="word_lists",
+            words_path=WORD_LISTS_PATH,
         )
         self.password = password
         self.setting = settings.get_chain_setting(network)
